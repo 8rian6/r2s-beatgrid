@@ -1,0 +1,6 @@
+# r2s-beatgrid dependencies
+# 安装命令：
+#   pip install -r requirements.txt
+
+serato-tools>=0.4.0
+mutagen>=1.47
