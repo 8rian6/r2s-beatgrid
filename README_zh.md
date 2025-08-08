@@ -1,9 +1,7 @@
 
 [English](README.md) | 简体中文
 
-# r2s-beatgrid (MP3 Only)
-
-Python script to write beat information from **Rekordbox XML** to **Serato BeatGrid**
+# r2s-beatgrid (只支持MP3)
 
 在 DJ 软件领域，Serato 与 Rekordbox 平分秋色。
 Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其是在 Hip-Hop、Funk、R&B、Reggae 等更强调律动、节奏变化与现场表现的音乐类型中，Serato 的用户占比显著更高。
