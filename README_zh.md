@@ -52,17 +52,18 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 
 1. 将目标 MP3 拖入 Rekordbox 曲库  
 ![Rekordbox 分析选项对话框](PIC/RekordboxCheck.png)
-3. 在弹出菜单中选“动态”+“高精度”（如图）
+3. 在弹出菜单中选“动态”+“高精度”(如图)
 4. 分析完成后，菜单 **File ▸ Export Collection in XML Format…**  
    - 保存为 带节拍网格的`.xml`
 
 ### 2 · Serato 侧：写入「初始化」信息
 
 1. 启动 Serato → 左栏 **+** 创建一个新 Crate，例如 `GridPrep`  
-2. 把同样的 MP3 全部拖入该 Crate  
-3. 点击 **Analyze Files**  
+2. 把同样的 MP3 全部拖入该 Crate
+![Rekordbox 分析选项对话框](PIC/SeratoCheck.png)
+4. 点击 **Analyze Files**  (如图)
    - 仅勾选 **Key** 与 **Waveform**，**取消 Beatgrid**  
-4. 等待分析结束 —— 这一步会为每首歌写入 Serato 所需的「初始化」标签（增益、概览等）
+5. 等待分析结束 —— 这一步会为每首歌写入 Serato 所需的「初始化」标签（增益、概览等）
 
 ### 3 · 安装脚本及依赖
 
