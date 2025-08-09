@@ -1,108 +1,135 @@
+# r2s-beatgrid (MP3 only)
 
-[简体中文](README_zh.md) | English
+Python script that writes beat information from **Rekordbox XML** into **Serato BeatGrid**.
 
-# r2s‑beatgrid (MP3 Only)
+Many classic and live-feel tracks (disco, funk, soul, rock, old-school hip-hop, etc.) do not keep a perfectly constant tempo. That makes tight looping, time-based FX and Sync tricky in Serato unless the Beatgrid is prepared carefully. Rekordbox can analyze **variable tempo** via its **Dynamic** track-analysis mode and produce a flexible grid that follows tempo drift. This script lets you take those Rekordbox-generated beat anchors and write them into the **MP3** so Serato can use the same precise bar‑1 downbeats and BPM changes.
 
-**Python script that writes beat information from Rekordbox XML into Serato BeatGrid**
-
-Serato and Rekordbox share the DJ‑software market.  
-Serato is favoured by DJs who perform with turntables and “battle”‑style controllers, especially in styles that emphasise groove and live expression—Hip‑Hop, Funk, R&B, Reggae, etc.  
-But precisely those classic genres (old‑school Hip‑Hop, Funk, Soul, Blues, classic Rock…) often feature natural tempo drift, and **Serato’s native BeatGrid does not support variable tempo**.  
-DJs therefore spend a lot of time manually fixing grids.
-
-Rekordbox, on the other hand, excels at variable‑tempo analysis: its Dynamic BeatGrid reliably locks to tempo changes with little or no tweaking.  
-With **this script (`r2s.py`)** you can automatically convert Rekordbox’s per‑track beat anchors and write them back into the corresponding **MP3** files, so Serato can read the same high‑precision variable grid.
-
-> Commercial tools already exist, but they are complex, require access to all of your DJ databases, and often need an Internet connection—plus a monthly fee of ~ USD 7.  
-> This script is free, offline, and open source.
-
-> ⚠️ **MP3 ONLY.** Grids for WAV / AIFF / FLAC / ALAC stay in `_Serato_/Database V2`; the script will not touch them.  
-> 🔄 **BACK UP all MP3s before you start!**
+> ⚠️ MP3 only. WAV / AIFF / FLAC / ALAC grids live in Serato’s `_Serato_/Database V2` and are not modified by this tool.  
+> 🔄 Back up your MP3s before processing.
 
 ---
 
-## ✨ Features
-
-| Feature | Description |
-|---------|-------------|
-| 🎯 Accurate grids | Writes Rekordbox’s down‑beats as Serato red‑line BeatGrid |
-| 🔄 Batch support | Works on XML files containing many `<TRACK>` entries |
-| 🛡️ Offline & safe | Edits only MP3 tags—never touches the Serato database |
-
----
-
-## 🖥️ Requirements
-
-| Component | Version / note |
-|-----------|----------------|
-| OS | Windows 10+, macOS 10.15+, or Linux |
-| Python | 3.7 or newer |
-| Dependencies | `serato-tools`, `mutagen` |
+## Features
+| Feature | Details |
+|---|---|
+| Accurate bar markers | Writes Serato red-line BeatGrid at each bar‑1 downbeat based on Rekordbox anchors |
+| Batch XML | Accepts Rekordbox XML containing multiple `<TRACK>` entries |
+| Offline and safe | Touches only MP3 tags (Serato BeatGrid GEOB + TBPM); does not touch Serato’s database |
 
 ---
 
-## 🚀 Quick‑start guide
+## Requirements
+| Component | Version / Notes |
+|---|---|
+| OS | Windows 10+ / macOS 10.15+ / Linux |
+| Python | 3.7+ |
+| Python deps | `serato-tools`, `mutagen` |
 
-### 0 · Back‑up
+---
 
-> **Strongly recommended:** copy all MP3s you intend to process to a safe place.
+## Terminology: Rekordbox analysis modes
+- **Normal** — analyzes toward a single BPM target range you choose.  
+- **Dynamic** — analyzes for **tempo changes** and produces a **flexible beatgrid** when tempo drifts; recommended for live‑drummed or older tracks.
 
-### 1 · Rekordbox — analyse & export XML
+To export your grid to XML: **File → Export Collection in xml format…**.
 
-1. **Preferences ▸ Analysis**  
-   - Mode **Dynamic BeatGrid**  
-   - Tick **High‑Resolution BeatGrid** if available.  
-2. Drag the target MP3s into your Rekordbox collection.  
-3. Select them ▸ right‑click **Analyse Track** (or use the top‑bar Analyse button).  
-4. When analysis is finished, choose **File ▸ Export Collection in XML Format…**  
-   - Tick **BeatGrid / Tempo information**.  
-   - Save as `rekordbox_export.xml`.
+Serato Beatgrids drive Sync, Quantize, loops, and time‑based FX—so accuracy matters.
 
-### 2 · Serato — write “initialisation” tags
+---
 
-1. Launch Serato ▸ in the left panel press **+** to create a new Crate, e.g. `GridPrep`.  
-2. Drag the same MP3s into this crate.  
-3. Click **Analyse Files** and **tick only** **Key** & **Waveform** — **untick Beatgrid**.  
-4. Wait until analysis finishes; Serato now writes gain, overview, etc. (the *initialisation* tags) into every MP3.
+## Workflow (parallel preparation, horizontal)
 
-### 3 · Install the script & dependencies
+```mermaid
+flowchart LR
+  B[Target MP3]
 
+  %% parallel branches
+  B --> C
+  B --> E
+
+  subgraph S[Serato DJ Pro]
+    direction TB
+    C[Import MP3 and write initial tags]
+  end
+
+  subgraph R[Rekordbox]
+    direction TB
+    E[Import MP3 and analyze Dynamic]
+    F[Export Collection as XML]
+    E --> F
+  end
+
+  subgraph CLI[Terminal]
+    direction TB
+    H[Activate Python environment]
+    M[Merge]
+    I[Run r2s.py write Beatgrid and TBPM]
+    H --> M --> I
+  end
+
+  C --> M
+  F --> M
+
+  I --> J[Back to Serato verify grid Sync Quantize loops]
+```
+
+---
+
+## Step‑by‑step
+
+### 0) Back up
+Copy all target MP3s to a safe location before you start.
+
+### 1) Rekordbox — analyze and export XML
+1. Drag the target MP3s into the **Rekordbox** collection.  
+2. In the Analysis dialog (or Preferences → Analysis → Track Analysis), set **Track Analysis Mode = Dynamic** and ensure **BPM / Grid** is selected; run analysis.  
+3. Export the library XML via **File → Export Collection in xml format…** (e.g., `rekordbox_export.xml`).
+
+Optional screenshot placeholders (if you add images to `PIC/`):  
+- `![Rekordbox analysis dialog](PIC/RekordboxCheck.png)`
+
+### 2) Serato — write initial tags
+1. Open **Serato DJ Pro** and create a crate (e.g., `GridPrep`).  
+2. Drag the **same** MP3s into that crate.  
+3. Click **Analyze Files** with **Key & Waveform only** (Beatgrid unchecked) to write Serato’s initial tags (gain, overview, etc.).
+
+Optional screenshot placeholder:  
+- `![Serato Analyze Files](PIC/SeratoCheck.png)`
+
+### 3) Install (one‑time)
 ```bash
-git clone https://github.com/<your‑username>/r2s-beatgrid.git
+git clone https://github.com/<your-username>/r2s-beatgrid.git
 cd r2s-beatgrid
 
-# optional virtual‑env
+# Create a virtual env
 python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
 
-# install dependencies
+# Activate it (do this before running each time)
+# macOS/Linux:
+source venv/bin/activate
+# Windows (cmd):
+# venv\Scripts\activate
+
+# Install deps
 pip install -r requirements.txt
+# Includes: serato-tools>=0.4.0 and mutagen>=1.47
 ```
 
-`requirements.txt` contains:
-```
-serato-tools>=0.4.0
-mutagen>=1.47
-```
-
-### 4 · Run the script
-
+### 4) Run the script
 ```bash
-python r2s.py /full/path/to/rekordbox_export.xml
+python r2s.py "/full/path/to/rekordbox_export.xml"
 ```
 
 Example output:
 ```
 --> Reading XML: /Users/me/exports/rb.xml
-→  Processing: Superstition (Superstition.mp3) , 112 bars
-✅  BeatGrid & BPM=99.99 written to 'Superstition.mp3'
+→ Processing: Superstition (Superstition.mp3), 112 bars
+✅ Wrote BeatGrid & BPM=99.99 to 'Superstition.mp3'
 ```
 
-### 5 · Verify in Serato
-
-Reload the processed tracks (remove then drag in again).  
-You should see red grid lines at every bar‑one, and BPM changes follow the Rekordbox grid.
+### 5) Verify in Serato
+Reload each track in Serato. You should see bar‑1 downbeats aligned and BPM changing over time (like in Rekordbox). Sync, Quantize, loops, and time‑based FX should now lock correctly.
 
 ---
 
-Happy mixing! 🎧
+Happy mixing!
