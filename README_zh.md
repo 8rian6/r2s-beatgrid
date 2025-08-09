@@ -3,6 +3,8 @@
 
 # r2s-beatgrid (只支持MP3)
 
+Python script to write beat information from **Rekordbox XML** to **Serato BeatGrid**
+
 在 DJ 软件领域，Serato 与 Rekordbox 平分秋色。
 Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其是在 Hip-Hop、Funk、R&B、Reggae 等更强调律动、节奏变化与现场表现的音乐类型中，Serato 的用户占比显著更高。
 然而，恰恰是这些经典的音乐风格（Old School Hip-Hop、Funk、Soul、Blues、经典摇滚等）往往伴随节奏的自然变化和律动的波动，而 Serato 本身并不支持变速节拍网格。
@@ -47,11 +49,10 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 
 ### 1 · Rekordbox 侧：分析并导出 XML
 
-1. **偏好设置 → Analysis (分析)**  
-   - 模式选择 **Dynamic**（动态节拍网格）  
-   - 若有 **High‑Resolution BeatGrid**（高精度网格）选项亦请勾选  
-2. 将目标 MP3 拖入 Rekordbox 曲库  
-3. 选中曲目 → 右键 **Analyze Track**（或顶部菜单“分析”）  
+
+1. 将目标 MP3 拖入 Rekordbox 曲库  
+(PIC/Rekordbox Check.png)
+3. 在弹出菜单中选“动态”+“高精度”（如图）
 4. 分析完成后，菜单 **File ▸ Export Collection in XML Format…**  
    - 勾选 **BeatGrid / Tempo 信息**  
    - 保存为 `rekordbox_export.xml`
@@ -70,8 +71,10 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 git clone https://github.com/<your‑username>/r2s-beatgrid.git
 cd r2s-beatgrid
 
-# (可选) 创建并激活虚拟环境
+# 创建环境
 python3 -m venv venv
+
+# 激活环境（以后每次运行都从这里开始）
 source venv/bin/activate        # Windows: venv\Scripts\activate
 
 # 安装依赖
