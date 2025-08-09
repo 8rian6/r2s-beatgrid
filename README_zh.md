@@ -40,12 +40,48 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 | Python | 3.7 及以上 |
 | 依赖 | `serato-tools` · `mutagen` |
 
----
+```mermaid
+flowchart LR
+    B[目标 MP3]
 
-流程图
-Rekordbox分析→得到Xml↘
-搭建python环境——————→运行r2s.py，将xml内的节拍网格写入MP3
-Serato分析→歌曲初始化↗
+    %% 从目标 MP3 同时分到 Serato 与 Rekordbox
+    B --> C
+    B --> E
+
+    %% Serato 分支
+    subgraph S[Serato DJ Pro]
+      direction TB
+      C[导入MP3并写入初始化信息]
+    end
+
+    %% Rekordbox 分支
+    subgraph R[Rekordbox]
+      direction TB
+      E[导入 MP3 并分析]
+      F[导出 XML 文件]
+      E --> F
+    end
+
+    %% 两支线在终端合流
+    C --> H
+    F --> H
+
+    %% 终端阶段
+    subgraph CLI[终端]
+      direction TB
+      H[激活python环境]
+      I[运行 r2s.py 将XML里的节拍网格写入mp3]
+      H --> I
+    end
+
+    %% 收尾
+    I --> J[回Serato开始打碟]
+```
+
+
+
+
+
 
 
 ## 🚀 使用步骤（建议一次性照做）
