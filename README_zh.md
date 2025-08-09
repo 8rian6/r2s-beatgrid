@@ -51,7 +51,7 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 
 
 1. 将目标 MP3 拖入 Rekordbox 曲库  
-![Rekordbox 分析选项对话框](PIC/Rekordbox Check.png)
+![Rekordbox 分析选项对话框](PIC/RekordboxCheck.png)
 3. 在弹出菜单中选“动态”+“高精度”（如图）
 4. 分析完成后，菜单 **File ▸ Export Collection in XML Format…**  
    - 保存为 带节拍网格的`.xml`
