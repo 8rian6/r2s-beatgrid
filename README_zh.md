@@ -42,41 +42,38 @@ Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其
 
 ```mermaid
 flowchart LR
-    B[目标 MP3]
+  B[目标 MP3]
 
-    %% 从目标 MP3 同时分到 Serato 与 Rekordbox
-    B --> C
-    B --> E
+  %% 并行分支
+  B --> C
+  B --> E
 
-    %% Serato 分支
-    subgraph S[Serato DJ Pro]
-      direction TB
-      C[导入MP3并写入初始化信息]
-    end
+  subgraph S[Serato DJ Pro]
+    direction TB
+    C[导入 MP3 并写入初始化信息]
+  end
 
-    %% Rekordbox 分支
-    subgraph R[Rekordbox]
-      direction TB
-      E[导入 MP3 并分析]
-      F[导出 XML 文件]
-      E --> F
-    end
+  subgraph R[Rekordbox]
+    direction TB
+    E[导入 MP3 并分析]
+    F[导出 XML 文件]
+    E --> F
+  end
 
-    %% 两支线在终端合流
-    C --> H
-    F --> H
+  subgraph CLI[终端]
+    direction TB
+    H[激活 Python 环境]
+    I[运行 r2s.py 写入 Beatgrid 与 TBPM]
+    H --> I
+  end
 
-    %% 终端阶段
-    subgraph CLI[终端]
-      direction TB
-      H[激活python环境]
-      I[运行 r2s.py 将XML里的节拍网格写入mp3]
-      H --> I
-    end
+  %% 合流：Serato 与 Rekordbox 的产出 + 激活环境 → 写入
+  C --> I
+  F --> I
 
-    %% 收尾
-    I --> J[回Serato开始打碟]
+  I --> J[回到 Serato 检查 网格 同步 量化 循环]
 ```
+
 
 
 
