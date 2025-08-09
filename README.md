@@ -1,3 +1,4 @@
+[简体中文](README_zh.md) | English
 # r2s-beatgrid (MP3 only)
 
 Python script that writes beat information from **Rekordbox XML** into **Serato BeatGrid**.
