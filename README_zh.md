@@ -6,6 +6,7 @@
 Python script to write beat information from **Rekordbox XML** to **Serato BeatGrid**
 
 在 DJ 软件领域，Serato 与 Rekordbox 平分秋色。
+
 Serato 深受那些偏好用唱机、战斗布局控制器的 DJ 欢迎，尤其是在 Hip-Hop、Funk、R&B、Reggae 等更强调律动、节奏变化与现场表现的音乐类型中，Serato 的用户占比显著更高。
 然而，恰恰是这些经典的音乐风格（Old School Hip-Hop、Funk、Soul、Blues、经典摇滚等）往往伴随节奏的自然变化和律动的波动，而 Serato 本身并不支持变速节拍网格。
 
