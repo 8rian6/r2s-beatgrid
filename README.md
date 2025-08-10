@@ -94,7 +94,7 @@ Optional screenshot placeholders (if you add images to `PIC/`):
 3. Click **Analyze Files** with **Key & Waveform only** (Beatgrid unchecked) to write Serato’s initial tags (gain, overview, etc.).
 
 Optional screenshot placeholder:  
-- `![Serato Analyze Files](PIC/SeratoCheck.png)`
+![Serato Analyze Files](PIC/SeratoCheck.png)`
 
 ### 3) Install (one‑time)
 ```bash
