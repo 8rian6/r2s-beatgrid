@@ -63,15 +63,14 @@ flowchart LR
   subgraph CLI[Terminal]
     direction TB
     H[Activate Python environment]
-    M[Merge]
     I[Run r2s.py write Beatgrid and TBPM]
-    H --> M --> I
+    H --> I
   end
 
-  C --> M
-  F --> M
+  C --> I
+  F --> I
 
-  I --> J[Back to Serato verify grid Sync Quantize loops]
+  I --> J[Back to Serato verify beatgrid]
 ```
 
 ---
@@ -87,7 +86,7 @@ Copy all target MP3s to a safe location before you start.
 3. Export the library XML via **File → Export Collection in xml format…** (e.g., `rekordbox_export.xml`).
 
 Optional screenshot placeholders (if you add images to `PIC/`):  
-- `![Rekordbox analysis dialog](PIC/RekordboxCheck.png)`
+![Rekordbox analysis dialog](PIC/RekordboxCheck.png)`
 
 ### 2) Serato — write initial tags
 1. Open **Serato DJ Pro** and create a crate (e.g., `GridPrep`).  
