@@ -71,7 +71,7 @@ flowchart LR
   C --> I
   F --> I
 
-  I --> J[回到 Serato 检查 网格 同步 量化 循环]
+  I --> J[回到 Serato 检查 节拍网格]
 ```
 
 
