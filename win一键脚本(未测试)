@@ -1,0 +1,15 @@
+@echo off & setlocal
+cd /d "%~dp0"
+where py >nul 2>nul && set "PY=py" || set "PY=python"
+if not exist ".venv\Scripts\python.exe" (
+  %PY% -3 -m venv .venv || (echo Failed to create venv.& pause & exit /b 1)
+  call .venv\Scripts\python.exe -m pip install --upgrade pip
+  if exist requirements.txt (
+    call .venv\Scripts\python.exe -m pip install -r requirements.txt
+  ) else (
+    call .venv\Scripts\python.exe -m pip install serato-tools mutagen
+  )
+)
+if "%~1"=="" (echo Drag the Rekordbox XML onto this .bat or run: r2s.bat "path\export.xml"& pause & exit /b 0)
+call .venv\Scripts\python.exe r2s.py %*
+pause
