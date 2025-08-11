@@ -110,7 +110,7 @@ flowchart LR
 ### 3 · 安装脚本及依赖
 
 ```bash
-git clone https://github.com/<your‑username>/r2s-beatgrid.git
+git clone https://github.com/8rian6/r2s-beatgrid.git
 cd r2s-beatgrid
 
 # 创建环境
